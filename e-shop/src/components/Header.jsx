@@ -1,45 +1,39 @@
-import "../App.css";
-import MikeLogo from "../assets/Mike_Logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import CartButton from "./CartBtn";
 import { useState } from "react";
+import MikeLogo from "../assets/Mike_Logo.png"; // Using your logo
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
 import CartModal from "./CartModal";
+import FavoritesModal from "./FavoriteModal";
+import "../App.css";
 
 export default function Header() {
-  const [showCart, setShowCart] = useState();
+  // State for each modal, keeping them separate
+  const [isCartOpen, setCartOpen] = useState(false);
+  const [isFavoritesOpen, setFavoritesOpen] = useState(false);
 
-  function handleCart(cartState) {
-    if (cartState === true) {
-     setShowCart(cartState);
-    } else{
-        setShowCart(false)
-    }
-      
-    console.log("Cart State: ", showCart);
-  }
   return (
-    <header>
-      <img src={MikeLogo} alt="" width="100px" />
-      <div className="linksContainer">
-        <ul>
-          <a href="">
-            <li>
-              <p>About</p>
-            </li>
-          </a>
-          <a href="">
-            <li>
-              <FontAwesomeIcon icon={faHeart} size="lg" />
-            </li>
-          </a>
+    <>
+      <header>
+        <img src={MikeLogo} alt="Mike Logo" width="80px" />
 
-          <li>
-            <CartButton showCart={handleCart} />
-            {showCart ? <CartModal cartState={handleCart} /> : null}
-          </li>
-        </ul>
-      </div>
-    </header>
+        
+
+        <div className="header-icons">
+          {/* Favorites Button: Opens the favorites modal */}
+          <button className="header-icon-btn" onClick={() => setFavoritesOpen(true)}>
+            <FontAwesomeIcon icon={faHeart} size="lg" />
+          </button>
+
+          {/* Cart Button: Opens the cart modal */}
+          <button className="header-icon-btn" onClick={() => setCartOpen(true)}>
+            <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+          </button>
+        </div>
+      </header>
+
+      {/* These modals will only appear when their respective state is true */}
+      {isCartOpen && <CartModal cartState={setCartOpen} />}
+      {isFavoritesOpen && <FavoritesModal closeModal={() => setFavoritesOpen(false)} />}
+    </>
   );
 }

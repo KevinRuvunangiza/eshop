@@ -5,13 +5,14 @@
 */
 
 :root {
-  --primary-text: #111827;
+  --primary-text: #1f2937; /* Darker gray, softer than pure black */
   --secondary-text: #6b7280;
   --background: #ffffff;
-  --surface: #f9fafb;
-  --primary-accent: #000000;
+  --surface: #f9fafb; /* Very light gray for body background */
+  --primary-accent: #111827; /* Near-black for main actions */
   --border-color: #e5e7eb;
-  --font-main: "Source Sans 3", Arial, Helvetica, sans-serif;
+  --danger-color: #ef4444;
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 * {
@@ -86,6 +87,26 @@ header {
   transform-origin: bottom left;
 }
 
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-text);
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.header-icon-btn:hover {
+  color: var(--primary-accent);
+}
+
+
 /*
 ================================================
   3. MAIN PRODUCT LAYOUT
@@ -159,7 +180,7 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9); /* Corrected: Back to white */
   backdrop-filter: blur(5px);
   border-radius: 99px;
   padding: 4px;
@@ -168,7 +189,7 @@ header {
 
 .numOfItemContainer button {
   border: none;
-  background-color: transparent;
+  background-color: transparent; /* Corrected: Back to transparent */
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -189,6 +210,7 @@ header {
   font-weight: 600;
   min-width: 20px;
   text-align: center;
+  color: var(--primary-text); /* Ensure text color is visible */
 }
 
 /*
@@ -287,7 +309,7 @@ header {
 }
 
 .add-to-cart-btn:hover {
-  background-color: #333;
+  background-color: #374151; /* Slightly lighter black */
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
@@ -303,6 +325,16 @@ header {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
+
+.add-to-favourite-btn.active {
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+.add-to-favourite-btn.active .fa-heart {
+  color: var(--danger-color);
+}
+
 
 /*
 ================================================
@@ -381,8 +413,8 @@ header {
 }
 
 .remove-btn:hover {
-  background-color: #fce8e8;
-  color: #c53030;
+  background-color: #fee2e2;
+  color: #ef4444;
 }
 
 .cart-total {
@@ -410,7 +442,7 @@ header {
 }
 
 .close-modal-btn:hover {
-  background-color: #333;
+  background-color: #374151;
 }
 
 .popup-container {
@@ -427,6 +459,53 @@ header {
   font-size: 15px;
   font-weight: 500;
   animation: fadeInOut 2.5s ease-in-out forwards;
+}
+
+.favoriteArticle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.favoriteArticle:last-child {
+  border-bottom: none;
+}
+
+.favoriteArticle img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.favoriteArticleText {
+  flex-grow: 1;
+}
+
+#favoriteArticleTitle {
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+#favoriteArticlePrice {
+  font-size: 14px;
+  color: var(--secondary-text);
+}
+
+.remove-favorite-btn {
+  background: transparent;
+  border: none;
+  color: var(--danger-color);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.remove-favorite-btn:hover {
+  background-color: #fee2e2;
 }
 
 /*
@@ -470,6 +549,6 @@ header {
   }
 
   .linksContainer {
-    display: none; /* Simple solution for mobile, could be replaced by a hamburger menu */
+    display: none;
   }
 }

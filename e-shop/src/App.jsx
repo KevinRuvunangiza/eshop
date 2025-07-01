@@ -18,6 +18,7 @@ const shoeInfo = {
 function App() {
   const [image, setImage] = useState();
   const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [popup, setPopup] = useState({ isVisible: false, message: "" });
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -75,6 +76,22 @@ function App() {
     });
   };
 
+  const toggleFavorite = (shoeToToggle) => {
+    setFavorites((prevFavorites) => {
+      const isFavorited = prevFavorites.some(
+        (item) => item.name === shoeToToggle.name
+      );
+
+      if (isFavorited) {
+        setPopup({ isVisible: true, message: "Removed from favorites" });
+        return prevFavorites.filter((item) => item.name !== shoeToToggle.name);
+      } else {
+        setPopup({ isVisible: true, message: "Added to favorites!" });
+        return [...prevFavorites, shoeToToggle];
+      }
+    });
+  };
+
   useEffect(() => {
     if (!popup.isVisible) return;
     const timer = setTimeout(() => {
@@ -90,6 +107,10 @@ function App() {
     shoeInfo,
     quantityToAdd,
     setQuantityToAdd,
+    selectedSize,
+    setSelectedSize,
+    favorites,
+    toggleFavorite,
   };
 
   return (
@@ -107,10 +128,7 @@ function App() {
               <p>{shoeInfo.gender}</p>
             </div>
             <p id="priceText">R{shoeInfo.price.toFixed(2)}</p>
-            
-            {/* THIS LINE IS NOW CORRECTED */}
             <SizeBox selectedSize={selectedSize} setSelectedSize={setSelectedSize} />
-
             <div className="inputs-buttons">
               <AddToCartButton />
               <AddToFavoriteButton />
