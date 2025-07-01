@@ -1,23 +1,19 @@
 import shoeTopView from "../assets/Air_Force_Topview.avif";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 export default function ShowCaseImage({ shoeImage }) {
-  const [numOfItem, setNumOfItem] = useState(0);
+  const { quantityToAdd, setQuantityToAdd } = useContext(CartContext);
 
   function increaseNumOfItem() {
-    setNumOfItem((prevNumOfItem) => {
-      return (prevNumOfItem += 1);
-    });
+    setQuantityToAdd((prevQuantity) => prevQuantity + 1);
   }
 
   function decreaseNumOfItem() {
-    setNumOfItem((prevNumOfItem) => {
-      return prevNumOfItem > 0 ? (prevNumOfItem -= 1) : (prevNumOfItem = 0);
-    });
+    setQuantityToAdd((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   }
   return (
     <div className="showcase-image">
@@ -30,7 +26,7 @@ export default function ShowCaseImage({ shoeImage }) {
         <button onClick={increaseNumOfItem}>
           <FontAwesomeIcon icon={faPlus} size="xl" />
         </button>
-        <p>{numOfItem}</p>
+        <p>{quantityToAdd}</p>
         <button onClick={decreaseNumOfItem}>
           <FontAwesomeIcon icon={faMinus} size="xl" />
         </button>
